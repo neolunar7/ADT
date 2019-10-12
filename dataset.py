@@ -51,9 +51,20 @@ class MDB_Dataset(data.Dataset):
         
     def __getitem__(self, index):
         src_instrument = self.ground_truth_src_list[index]
+        if src_instrument == 'KD':
+            src_instrument_onehot = torch.Tensor([1,0,0,0])
+        elif src_instrument == 'SD':
+            src_instrument_onehot = torch.Tensor([0,1,0,0])
+        elif src_instrument == 'HH':
+            src_instrument_onehot = torch.Tensor([0,0,1,0])
+        else:
+            src_instrument_onehot = torch.Tensor([0,0,0,0])
         src_time = self.ground_truth_time_list[index]
         src_melspectrogram = self.melspectrogram[:, self.ground_truth_frame_list[index]:self.ground_truth_frame_list[index]+self.input_frame_size]
-        return src_instrument, src_time, src_melspectrogram
+        return src_instrument_onehot, src_time, torch.Tensor(src_melspectrogram)
+
+    def __len__(self):
+        return len(self.ground_truth_frame_list)
 
 
 if __name__ == '__main__':
