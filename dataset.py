@@ -2,7 +2,7 @@ from torch.utils import data
 import torch
 import librosa
 import numpy as np
-import glob, os, random
+import glob, os, random, unittest
 
 """
     TODO
@@ -117,5 +117,5 @@ class MDB_Dataset(data.Dataset):
 
 
 if __name__ == '__main__':
-    sampledata = MDB_Dataset()
-    print(sampledata[150])
+    sample_Dataset = MDB_Dataset()
+    print(sample_Dataset[100])
